@@ -1,6 +1,6 @@
 <?php
 // Storefront front controller: every non-file request lands here (.htaccess).
-// With PHP's built-in server: php -S localhost:8080 -t storefront storefront/index.php
+// With PHP's built-in server: php -S localhost:8080 -t public public/index.php   (or serve.bat)
 
 if (PHP_SAPI === 'cli-server') {
     if (preg_match('#^/(config|mock|lib)(/|$)#', (string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) { http_response_code(404); exit('Not found'); }
