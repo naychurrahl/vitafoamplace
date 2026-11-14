@@ -1,0 +1,6 @@
+# Demo data written while the mock runs (demo branch)
+/mock/runtime/
+# Photos uploaded through the demo CMS
+/assets/uploads/
+# Settings live in ../config/, beside this folder, never in it (sample: config.sample/)
+/config/
