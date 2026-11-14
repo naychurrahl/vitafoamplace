@@ -1,0 +1,18 @@
+Options -Indexes
+DirectoryIndex index.php
+
+RewriteEngine On
+
+# Never serve internal folders directly
+RewriteRule ^(lib|pages|partials|config|mock)(/|$) - [F,L]
+
+# Real files (assets) are served as-is; everything else goes to the front controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|svg|woff2?)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
