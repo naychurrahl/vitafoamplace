@@ -14,13 +14,13 @@ final class Api
 
     public function __construct(array $headers = [])
     {
-        self::$config ??= require dirname(__DIR__) . '/config/app.php';
+        self::$config ??= require dirname(__DIR__, 2) . '/config/app.php';
         $this->headers = $headers + ['X-Store-Domain' => self::$config['api']['store_domain']];
     }
 
     public static function config(): array
     {
-        return self::$config ??= require dirname(__DIR__) . '/config/app.php';
+        return self::$config ??= require dirname(__DIR__, 2) . '/config/app.php';
     }
 
     public function withHeader(string $name, ?string $value): self
