@@ -4,7 +4,7 @@ DirectoryIndex index.php
 RewriteEngine On
 
 # Never serve internal folders directly
-RewriteRule ^(lib|pages|partials|config|mock)(/|$) - [F,L]
+RewriteRule ^(lib|pages|partials|config|config\.sample|mock)(/|$) - [F,L]
 
 # Real files (assets) are served as-is; everything else goes to the front controller
 RewriteCond %{REQUEST_FILENAME} !-f

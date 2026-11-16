@@ -70,7 +70,14 @@ final class MockApi
     private function __construct(private array $config)
     {
         date_default_timezone_set('Africa/Lagos');
-        $state = $config['state'];
+        // Paths in the config may be relative to the web root (this folder's parent), so the web root
+        // can have any name (public/, public_html/...).
+        foreach (['seed', 'state', 'uploads_dir'] as $k) {
+            if (isset($this->config[$k]) && !preg_match('#^([a-z]:)?[\\\\/]#i', $this->config[$k])) {
+                $this->config[$k] = dirname(__DIR__) . '/' . $this->config[$k];
+            }
+        }
+        $state = $this->config['state'];
         if (is_file($state)) {
             $this->db = json_decode((string) file_get_contents($state), true) ?: [];
         }
@@ -1844,7 +1851,7 @@ final class MockApi
         // e.g. vitafoam-galaxy-orthopedic-mattress-nigeria.jpg, then -2, -3 for further photos
         $base = trim(preg_replace('/[^a-z0-9]+/', '-', strtolower(preg_replace('/\.(jpe?g|png|webp)$/i', '', (string) $this->in('filename')))), '-') ?: $p['slug'] . '-nigeria';
         $base = strlen($base) > 80 ? substr($base, 0, strrpos(substr($base, 0, 80), '-') ?: 80) : $base;
-        $dir = $this->config['uploads_dir'] ?? dirname(__DIR__) . '/storefront/assets/uploads';
+        $dir = $this->config['uploads_dir'] ?? dirname(__DIR__) . '/assets/uploads';
         if (!is_dir($dir)) mkdir($dir, 0775, true);
         $name = "$base.$ext";
         for ($n = 2; is_file("$dir/$name"); $n++) $name = "$base-$n.$ext";

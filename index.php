@@ -3,7 +3,7 @@
 // With PHP's built-in server: php -S localhost:8080 -t public public/index.php   (or serve.bat)
 
 if (PHP_SAPI === 'cli-server') {
-    if (preg_match('#^/(config|mock|lib)(/|$)#', (string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) { http_response_code(404); exit('Not found'); }
+    if (preg_match('#^/(config|config\.sample|mock|lib)(/|$)#', (string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) { http_response_code(404); exit('Not found'); }
     $file = __DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     if (is_file($file) && !str_ends_with($file, '.php')) return false;
     $_SERVER['SCRIPT_NAME'] = '/index.php';
