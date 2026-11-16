@@ -52,7 +52,7 @@ $cats = Store::api()->get('/categories');
     </div>
   </div>
   <div class="wrap footer-base">
-    <span>© <?= date('Y') ?> <?= e($S['name']) ?>. All prices in Naira.</span>
+    <span>© <?= date('Y') ?> <?= e($S['name']) ?>. All prices in Naira. · Website by <a href="https://naychurrahl.com.ng">naychurrahl</a></span>
     <span class="pay-badges"><span>Pay on delivery</span><span>Paystack</span><span>Bank transfer</span></span>
     <span><a href="<?= url('about') ?>">About</a> · <a href="<?= url('privacy') ?>">Privacy</a> · <a href="<?= url('terms') ?>">Terms</a></span>
   </div>
