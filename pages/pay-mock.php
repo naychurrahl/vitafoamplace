@@ -1,6 +1,7 @@
 <?php
 // Demo stand-in for Paystack's hosted checkout. The real API returns a checkout.paystack.com URL.
 $S = Store::info();
+if (empty($S['demo'])) throw new NotFound(); // only the demo API sends shoppers here
 $ref = $_GET['reference'] ?? '';
 View::meta(['title' => 'Paystack (demo)', 'noindex' => true, 'raw' => true]);
 ?><!doctype html>
