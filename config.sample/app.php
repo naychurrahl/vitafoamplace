@@ -13,7 +13,6 @@ return [
     ],
 
     'storefront' => [
-        'url'           => 'http://localhost:8080',   // this site's own address (canonical links, payment callbacks)
         'cookie_prefix' => 'rw_',
     ],
 ];

@@ -81,10 +81,17 @@ final class View
         require __DIR__ . "/../partials/$name.php";
     }
 
+    /** Full address of a page on this site, from the request itself (works on any host and domain). */
     public static function absolute(string $path): string
     {
-        $scheme = !empty($_SERVER['HTTPS']) ? 'https' : 'http';
-        return $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url($path);
+        return (self::https() ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . url($path);
+    }
+
+    /** Whether the visitor is on HTTPS, also when the host's proxy handles HTTPS in front of PHP. */
+    public static function https(): bool
+    {
+        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SERVER['REQUEST_SCHEME'] ?? '') === 'https'
+            || strtolower($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https';
     }
 
     public static function breadcrumbs(array $crumbs): void
