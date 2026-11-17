@@ -5,9 +5,8 @@
 
 return [
     'api' => [
-        'driver'       => 'http',                     // the backend API (the demo branch uses "mock")
+        'driver'       => 'http',                     // the backend API
         'base_url'     => 'http://localhost:8082',    // where the API runs
-        'store_domain' => 'vitafoamplace.ng',         // sent as X-Store-Domain: which store this storefront is
         'timeout'      => 10,
         'cache_ttl'    => 60,                         // seconds to keep store info, categories, brands, banners, guide pages (0 = off)
     ],

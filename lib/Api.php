@@ -19,7 +19,7 @@ final class Api
     public function __construct(array $headers = [])
     {
         self::$config ??= require dirname(__DIR__, 2) . '/config/app.php';
-        $this->headers = $headers + ['X-Store-Domain' => self::$config['api']['store_domain']];
+        $this->headers = $headers;
     }
 
     public static function config(): array
@@ -49,7 +49,7 @@ final class Api
 
         $key = null;
         if ($method === 'GET' && in_array($path, self::CACHEABLE, true)) {
-            $key = sha1($cfg['api']['base_url'] . '|' . $cfg['api']['store_domain'] . '|' . $path . '?' . http_build_query($query));
+            $key = sha1($cfg['api']['base_url'] . '|' . $path . '?' . http_build_query($query));
             if ($hit = self::$memo[$key] ?? self::cacheGet($key)) return self::$memo[$key] = $hit;
         }
 
