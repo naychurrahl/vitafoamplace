@@ -4,3 +4,5 @@
 /assets/uploads/
 # Settings live in ../config/, beside this folder, never in it (sample: config.sample/)
 /config/
+# Short cache of API reads (lib/Api.php)
+/cache/
