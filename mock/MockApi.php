@@ -526,6 +526,9 @@ final class MockApi
         usort($s['contacts'], fn($a, $b) => $a['sort'] <=> $b['sort']);
         $s['now'] = $this->now();
         $s['same_day_open'] = date('H:i') < $s['same_day_cutoff'];
+        // The mock is always the demo; the storefront and CMS take their demo badge, hints and noindex from this.
+        $s['demo'] = true;
+        $s['demo_password'] = $this->config['demo_password'];
         return $s;
     }
 
@@ -1655,7 +1658,7 @@ final class MockApi
     {
         $role = $this->find('roles', $s['role'], 'name');
         return ['id' => $s['id'], 'name' => $s['first_name'] . ' ' . $s['last_name'], 'email' => $s['email'], 'role' => $s['role'],
-                'permissions' => $role['permissions'] ?? [], 'stores' => [['id' => 1, 'name' => $this->db['store']['name']]]];
+                'permissions' => $role['permissions'] ?? [], 'stores' => [['id' => 1, 'name' => $this->db['store']['name']]], 'demo' => true];
     }
 
     private function adminMe(): array { return $this->adminMeView($this->staff()); }
