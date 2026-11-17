@@ -19,7 +19,9 @@ final class Api
     public function __construct(array $headers = [])
     {
         self::$config ??= require dirname(__DIR__, 2) . '/config/app.php';
-        $this->headers = $headers;
+        // Every call says which app is calling (its key) and for which visitor (their address): the API counts
+        // login attempts per visitor, and believes the address only with a valid key.
+        $this->headers = $headers + array_filter(['X-Client-Key' => self::$config['api']['client_key'] ?? '', 'X-Client-IP' => $_SERVER['REMOTE_ADDR'] ?? '']);
     }
 
     public static function config(): array
