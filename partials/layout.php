@@ -18,7 +18,7 @@ View::jsonld([
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($title) ?></title>
 <meta name="description" content="<?= e($desc) ?>">
-<?php if (!empty($m['noindex'])): ?><meta name="robots" content="noindex"><?php endif ?>
+<?php if (!empty($m['noindex']) || !empty($S['demo'])): ?><meta name="robots" content="noindex"><?php endif ?>
 <link rel="canonical" href="<?= e($canonical) ?>">
 <meta property="og:type" content="<?= e($m['og_type'] ?? 'website') ?>">
 <meta property="og:title" content="<?= e($title) ?>">
@@ -46,8 +46,8 @@ View::jsonld([
 <?php require __DIR__ . '/footer.php' ?>
 <a class="wa-float" href="<?= e(Store::whatsapp('Hello ' . $S['name'] . ', I need help choosing a mattress.')) ?>" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><?= icon('whatsapp') ?></a>
 <div class="toast" role="status" aria-live="polite" hidden></div>
-<?php if (Api::config()['api']['driver'] === 'mock'): ?>
-<div class="demo-flag" title="The storefront is reading mock/data.json through mock/MockApi.php">Demo · mock data</div>
+<?php if (!empty($S['demo'])): ?>
+<div class="demo-flag" title="Demo store: test payments only, sign-in codes are shown on screen, and search engines are asked not to index it">Demo store</div>
 <?php endif ?>
 </body>
 </html>

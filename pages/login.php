@@ -55,7 +55,7 @@ $tab = fn($v, $label) => '<a role="tab" aria-selected="' . ($via === $v ? 'true'
     <?php elseif ($via === 'code'): ?>
     <p>If <strong><?= e($masked) ?></strong> has ordered with us, a 6-digit code is on its way by <?= $isEmail ? 'email' : 'text message' ?>. It lasts 5 minutes.</p>
     <?php if (!empty($otp['demo'])): ?><p class="notice small">Demo: no <?= $isEmail ? 'email' : 'SMS' ?> is sent. Your code is <strong><?= e($otp['demo']) ?></strong> (also in CMS › Outbox).</p>
-    <?php elseif (Api::config()['api']['driver'] === 'mock'): ?><p class="notice small">Demo: no code was sent, because nobody has ordered with that <?= $isEmail ? 'email' : 'number' ?>.</p><?php endif ?>
+    <?php elseif (!empty(Store::info()['demo'])): ?><p class="notice small">Demo: no code was sent, because nobody has ordered with that <?= $isEmail ? 'email' : 'number' ?>.</p><?php endif ?>
     <form method="post" class="form" action="<?= url('login', ['next' => $next]) ?>">
       <?= csrf_field() ?><input type="hidden" name="action" value="verify">
       <label>Code<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6}" maxlength="6" required autofocus></label>
@@ -75,7 +75,7 @@ $tab = fn($v, $label) => '<a role="tab" aria-selected="' . ($via === $v ? 'true'
       <button class="btn btn-primary btn-block">Sign in</button>
     </form>
     <p class="small">Forgot your password? <a href="<?= url('login', ['next' => 'account']) ?>">Sign in with a code</a>, then set a new one from your account.</p>
-    <?php if (Api::config()['api']['driver'] === 'mock'): ?><p class="small muted">Demo: any member phone from the CMS customer list, password <code><?= e(Api::config()['mock']['demo_password']) ?></code>.</p><?php endif ?>
+    <?php if ($demoPw = Store::info()['demo_password'] ?? null): ?><p class="small muted">Demo: any member phone from the CMS customer list, password <code><?= e($demoPw) ?></code>.</p><?php endif ?>
     <?php endif ?>
 
     <p class="small">New here? <a href="<?= url('register', ['next' => $next]) ?>">Create an account</a> · <a href="<?= url('checkout') ?>">Continue as guest</a></p>
