@@ -18,7 +18,7 @@ final class Api
 
     public function __construct(array $headers = [])
     {
-        self::$config ??= require dirname(__DIR__, 2) . '/config/app.php';
+        self::$config ??= self::load();
         // Every call says which app is calling (its key) and for which visitor (their address): the API counts
         // login attempts per visitor, and believes the address only with a valid key.
         $this->headers = $headers + array_filter(['X-Client-Key' => self::$config['api']['client_key'] ?? '', 'X-Client-IP' => $_SERVER['REMOTE_ADDR'] ?? '']);
@@ -26,7 +26,21 @@ final class Api
 
     public static function config(): array
     {
-        return self::$config ??= require dirname(__DIR__, 2) . '/config/app.php';
+        return self::$config ??= self::load();
+    }
+
+    /**
+     * config/app.php: next to the web root (preferred: no URL can reach it), or inside it for hosts that delete
+     * anything outside (InfinityFree), where .htaccess blocks /config/. Missing: a clear message, not a blank page.
+     */
+    private static function load(): array
+    {
+        foreach ([dirname(__DIR__, 2), dirname(__DIR__)] as $dir) {
+            if (is_file("$dir/config/app.php")) return require "$dir/config/app.php";
+        }
+        http_response_code(500);
+        header('Content-Type: text/plain; charset=utf-8');
+        exit("The storefront isn't set up: config/app.php is missing. Copy config.sample/app.php to config/app.php next to this site's folder, or inside it if the host allows nothing outside.");
     }
 
     public function withHeader(string $name, ?string $value): self
