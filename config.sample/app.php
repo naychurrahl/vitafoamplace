@@ -9,6 +9,7 @@ return [
         'base_url'     => 'http://localhost:8082',
         'store_domain' => 'vitafoamplace.ng',
         'timeout'      => 10,
+        'cache_ttl'    => 60,                         // seconds to keep store info, categories, brands, banners, guide pages (0 = off)
     ],
 
     'mock' => [
