@@ -25,8 +25,7 @@ final class Store
     {
         return (new Api())
             ->withHeader('X-Cart-Token', self::cookie('cart'))
-            ->withHeader('Authorization', ($t = self::cookie('auth')) ? "Bearer $t" : null)
-            ->withHeader('X-Client-IP', $_SERVER['REMOTE_ADDR'] ?? null); // the API throttles logins per visitor IP
+            ->withHeader('Authorization', ($t = self::cookie('auth')) ? "Bearer $t" : null);
     }
 
     public static function info(): array

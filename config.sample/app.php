@@ -7,6 +7,7 @@ return [
     'api' => [
         'driver'       => 'http',                     // the backend API
         'base_url'     => 'http://localhost:8082',    // where the API runs
+        'client_key'   => '',                         // this app's key: clients.storefront in the API's config/app.php
         'timeout'      => 10,
         'cache_ttl'    => 60,                         // seconds to keep store info, categories, brands, banners, guide pages (0 = off)
     ],
