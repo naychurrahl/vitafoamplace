@@ -17,7 +17,7 @@ final class Store
         // Cookies must go out before any HTML. View warms the cart and login state before the layout
         // renders, so this only trips if a template sets one late; then skip it rather than warn.
         if (!headers_sent()) setcookie($n, (string) $value, ['expires' => $value === null ? time() - 3600 : time() + $days * 86400, 'path' => base_path() . '/',
-                                         'httponly' => true, 'samesite' => 'Lax', 'secure' => !empty($_SERVER['HTTPS'])]);
+                                         'httponly' => true, 'samesite' => 'Lax', 'secure' => View::https()]);
         if ($value === null) unset($_COOKIE[$n]); else $_COOKIE[$n] = $value;
     }
 
